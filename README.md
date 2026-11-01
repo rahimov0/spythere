@@ -1,0 +1,11 @@
+# Casus – Mekânı Bul
+
+Spyfall tarzı parti oyunu. Tek telefon modu ve herkesin kendi telefonundan oynadığı oda modu (kod, link, QR). 5 dil.
+
+## Kurulum
+1. Firebase projesi aç, Realtime Database ve Anonymous giriş yöntemini etkinleştir.
+2. `database.rules.json` içeriğini Realtime Database > Rules bölümüne yapıştırıp yayınla.
+3. Web uygulaması ekleyip çıkan ayarları `firebase-config.js` dosyasına yapıştır.
+4. Dosyaları GitHub'a yükle, GitHub Pages ya da Vercel ile yayınla.
+
+Oda verileri oyuncular çıkınca otomatik silinir.
