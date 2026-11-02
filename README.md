@@ -1,6 +1,6 @@
-# Casus – Mekânı Bul
+# Spythere
 
-Spyfall tarzı parti oyunu. Tek telefon modu ve herkesin kendi telefonundan oynadığı oda modu (kod, link, QR). 5 dil.
+Spyfall tarzı parti oyunu (spy + there + spider). Tek telefon modu ve herkesin kendi telefonundan oynadığı oda modu (kod, link, QR). 5 dil.
 
 ## Kurulum
 1. Firebase projesi aç, Realtime Database ve Anonymous giriş yöntemini etkinleştir.

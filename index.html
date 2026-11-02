@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Casus – Mekânı Bul</title>
-<meta name="description" content="Spyfall tarzı parti oyunu: mekânı bul, casusu yakala. Tek telefon ve oda modu, 5 dil.">
+<title>Spythere – Mekânı bul, casusu yakala</title>
+<meta name="description" content="Spythere: Spyfall tarzı parti oyunu. Mekânı bul, casusu yakala. Tek telefon ve oda modu, 5 dil.">
 <meta name="theme-color" content="#14112b">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
@@ -19,8 +22,9 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100vh;background:var(--bg) radial-gradient(rgba(255,255,255,.07) 1.5px,transparent 1.5px) 0 0/22px 22px;color:var(--tx);font:700 16px/1.4 Nunito,system-ui,-apple-system,"Segoe UI",sans-serif}
 #app{max-width:520px;margin:0 auto;padding:18px 16px 44px}
 .logo{display:flex;align-items:center;gap:10px;margin:18px 0 0}
-.logo svg{width:54px;height:54px;flex:none;filter:drop-shadow(0 4px 0 var(--ink))}
-h1{font:400 66px/1 "Lilita One",Impact,sans-serif;margin:0;color:var(--yel);letter-spacing:1px;text-shadow:0 5px 0 var(--ink),3px 3px 0 var(--coral)}
+.logo svg{width:68px;height:68px;flex:none;filter:drop-shadow(0 4px 0 var(--ink))}
+h1 span{color:var(--lime)}
+h1{font:400 46px/1 "Lilita One",Impact,sans-serif;margin:0;color:var(--yel);letter-spacing:1px;text-shadow:0 5px 0 var(--ink),3px 3px 0 var(--coral)}
 h2{font:400 28px/1.1 "Lilita One",Impact,sans-serif;margin:6px 0 12px;letter-spacing:.5px}
 p.s{color:var(--mu);margin:6px 0 20px}
 .card{background:var(--card);border:3px solid var(--ink);border-radius:22px;padding:16px;margin-bottom:16px;box-shadow:0 6px 0 var(--ink)}
@@ -140,9 +144,9 @@ function render(){
   if(f==="home")home();else if(f==="lset")lset();else if(f==="lcard")lcard();else if(f==="lplay")play(true);
   else if(f==="rmenu")rmenu();else if(f==="cust")cust();else if(f==="pool")pool();else if(f==="locs")locs();else if(f==="room")roomView();
 }
-function head(){return `<h1>CASUS</h1><p class="s">Mekânı bil, casusu bul. Ya da casussan, kimseye sezdirme.</p>`}
+function head(){return `<h1>SPYTHERE</h1><p class="s">Mekânı bil, casusu bul. Ya da casussan, kimseye sezdirme.</p>`}
 function home(){
-  $.innerHTML=`<div class="lang">${["tr","en","de","az","ru"].map(c=>`<button data-a="lg" data-i="${c}" class="${c===LANG?"p":""}">${c.toUpperCase()}</button>`).join("")}</div><div class="logo"><svg viewBox="0 0 48 48"><circle cx="20" cy="20" r="13" fill="#2a2459" stroke="#c6ff3d" stroke-width="6"/><path d="M30 30l13 13" stroke="#c6ff3d" stroke-width="8" stroke-linecap="round"/><circle cx="20" cy="20" r="4.5" fill="#ff5d73"/></svg><h1>CASUS</h1></div><p class="s">Mekânı bul, casusu yakala.</p>
+  $.innerHTML=`<div class="lang">${["tr","en","de","az","ru"].map(c=>`<button data-a="lg" data-i="${c}" class="${c===LANG?"p":""}">${c.toUpperCase()}</button>`).join("")}</div><div class="logo"><svg viewBox="0 0 120 120"><rect x="3" y="3" width="114" height="114" rx="28" fill="#2a2459" stroke="#0b0919" stroke-width="5"/><g fill="none" stroke="#ffffff" stroke-opacity=".1" stroke-width="1.5"><path d="M60 3V30M3 60H30M117 60H90M25 25L45 45M95 25L75 45"/><path d="M20 20Q60 50 100 20M12 44Q60 66 108 44"/></g><g fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#0b0919" stroke-width="10"><path d="M52 62Q30 42 14 52M50 68Q26 62 12 74M50 74Q28 80 18 96M54 80Q42 96 34 108"/><path d="M68 62Q90 42 106 52M70 68Q94 62 108 74M70 74Q80 80 84 90M66 80Q74 94 74 108"/></g><g stroke="#c6ff3d" stroke-width="5"><path d="M52 62Q30 42 14 52M50 68Q26 62 12 74M50 74Q28 80 18 96M54 80Q42 96 34 108"/><path d="M68 62Q90 42 106 52M70 68Q94 62 108 74M70 74Q80 80 84 90M66 80Q74 94 74 108"/></g></g><circle cx="60" cy="78" r="16" fill="#c6ff3d" stroke="#0b0919" stroke-width="4"/><path d="M54 74L66 82M66 74L54 82" stroke="#ff5d73" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="58" r="15" fill="#c6ff3d" stroke="#0b0919" stroke-width="4"/><g stroke="#0b0919" stroke-width="3"><circle cx="53" cy="58" r="6.5" fill="#fff"/><circle cx="67" cy="58" r="6.5" fill="#fff"/></g><circle cx="54.5" cy="59" r="3" fill="#0b0919"/><circle cx="68.5" cy="59" r="3" fill="#0b0919"/><g stroke="#0b0919" stroke-width="4" stroke-linejoin="round" transform="rotate(-7 60 46)"><ellipse cx="60" cy="45" rx="25" ry="5.5" fill="#ffd23f"/><path d="M47 44L48 32Q50 23 57 23Q60 26.5 63 23Q70 23 72 32L73 44Z" fill="#ffd23f"/><path d="M47.3 37H72.7L73 44H47Z" fill="#ff5d73"/></g><circle cx="94" cy="92" r="10.5" fill="#bff4ff" fill-opacity=".4" stroke="#0b0919" stroke-width="7"/><circle cx="94" cy="92" r="10.5" fill="none" stroke="#38e1ff" stroke-width="3.5"/><path d="M101.5 99.5L110 108" stroke="#0b0919" stroke-width="8" stroke-linecap="round"/><path d="M101.5 99.5L110 108" stroke="#ffd23f" stroke-width="4" stroke-linecap="round"/></svg><h1>SPY<span>THERE</span></h1></div><p class="s">Mekânı bul, casusu yakala.</p>
 <div class="mode m1" data-a="lset"><i>3–20 kişi</i><b>Tek telefon</b><span>Telefonu elden ele dolaştırın</span></div>
 <div class="mode m2" data-a="rmenu"><i>kod · link · QR</i><b>Oda kur / katıl</b><span>Herkes kendi telefonundan oynar</span></div>
 <div class="row"><button data-a="locs">Mekânlar</button><button data-a="cust">Mekân ekle (${CU.length})</button></div>`;
@@ -291,7 +295,7 @@ document.addEventListener("click",async ev=>{
   else if(a==="s-"||a==="s+"){const c=S.scr==="lset"?S.n:cur().players.length,v=Math.min(S.sp||1,maxSp(c))+(a==="s+"?1:-1);S.sp=Math.max(1,Math.min(maxSp(c),v));S.scr==="lset"?lset():roomView()}
   else if(a==="bl"){S.blind=!S.blind;S.scr==="lset"?lset():roomView()}
   else if(a==="cp"||a==="sh"){const u=invU(),m=document.getElementById("cpm");
-    if(a==="sh"&&navigator.share){try{await navigator.share({title:"Casus",text:"Odaya gel! Kod: "+cr,url:u});return}catch(e){}}
+    if(a==="sh"&&navigator.share){try{await navigator.share({title:"Spythere",text:"Odaya gel! Kod: "+cr,url:u});return}catch(e){}}
     try{await navigator.clipboard.writeText(u);if(m)m.textContent="Kopyalandı ✓"}catch(e){if(m)m.textContent="Linki elle kopyala: "+u}}
   else if(a==="lg"){LANG=i;try{localStorage.setItem("casus_lang",i)}catch(e){}document.documentElement.lang=i;go("home")}
   else if(a==="ll"){const e=document.getElementById("ll");e.hidden=!e.hidden}
