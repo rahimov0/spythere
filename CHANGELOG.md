@@ -3,6 +3,9 @@
 Sürüm numarası ana ekranın en altında görünür. Her güncellemede artırılır:
 düzeltmelerde son sayı (1.0.1), yeni özelliklerde ortadaki sayı (1.1.0).
 
+## 1.0.1
+- Ana ekranın altına kısa bir alt bilgi eklendi: "by Rahimov" (rahimov.tr bağlantılı) ve "Spyfall'dan esinlenilmiştir".
+
 ## 1.0.0
 - Sürüm numarası eklendi.
 - Oda modu: oylama sonuç ekranı, oy sayacı, kapalı mekân listesi, "Oda bulunamadı" kontrolü, ev sahibi devri.

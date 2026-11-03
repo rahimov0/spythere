@@ -9,3 +9,8 @@ Spyfall tarzı parti oyunu (spy + there + spider). Tek telefon modu ve herkesin 
 4. Dosyaları GitHub'a yükle, GitHub Pages ya da Vercel ile yayınla.
 
 Oda verileri oyuncular çıkınca otomatik silinir.
+
+## Esin kaynağı
+Alexandr Ushan'ın Spyfall oyunundan esinlenilmiştir. Orijinal oyunla resmî bir bağlantısı yoktur. Oyunun adı, logosu, tasarımı, metinleri ve çevirileri ayrıca hazırlanmıştır.
+
+Oluşturan: [Rahimov](https://rahimov.tr)
