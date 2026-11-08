@@ -3,6 +3,10 @@
 Sürüm numarası ana ekranın en altında görünür. Her güncellemede artırılır:
 düzeltmelerde son sayı (1.0.1), yeni özelliklerde ortadaki sayı (1.1.0).
 
+## 1.1.1
+- Casusun mekânı tahmin ederek oyunu bitirme kuralı tamamen kaldırıldı (kod dahil). Oyun yalnızca herkesin oy vermesiyle biter.
+- Mekânlar, Mekân ekle ve Mekân seç ekranlarının üstüne "Geri" düğmesi eklendi; artık en alta inmek gerekmiyor.
+
 ## 1.1.0
 - Oda: oyuncu artık arka plana geçince, ekran kapanınca, sayfa yenilenince veya internet kısa süre kopunca odadan düşmez. Kopan oyuncu "bağlantı yok" olarak görünür, geri gelince aynı oyuncu olarak devam eder (yinelenen oyuncu oluşmaz).
 - Sayfa yenilense de oyuncu aynı odaya, aynı karta ve aynı mesleğe döner (oturum bu cihazda 12 saat saklanır).

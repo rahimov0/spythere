@@ -68,6 +68,7 @@ input.code{text-align:center;letter-spacing:10px;font:400 34px "Lilita One",Impa
 #cn{position:fixed;left:0;right:0;top:0;z-index:60;background:var(--coral);color:#fff;text-align:center;padding:6px 10px;font:800 13px Nunito,sans-serif}
 #lgf{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:8px;z-index:55;text-align:right}#lgf>button{width:auto;font-size:14px;padding:4px 11px;box-shadow:0 3px 0 var(--ink)}
 #lgm{display:flex;gap:6px;margin-top:8px;justify-content:flex-end}#lgm[hidden]{display:none}#lgm button{width:auto;font-size:14px;padding:4px 10px;box-shadow:0 3px 0 var(--ink)}
+.bk{width:auto;padding:6px 16px;font-size:15px;margin-bottom:12px;box-shadow:0 3px 0 var(--ink)}
 .you{opacity:.7;font-size:.85em}
 .kb{width:auto!important;padding:3px 12px!important;font-size:13px!important;margin-left:8px;box-shadow:0 2px 0 var(--ink)!important;background:var(--coral)!important;color:#fff!important}
 .lang{display:flex;gap:6px;justify-content:flex-end}.lang button{width:auto;font-size:14px;padding:4px 11px;box-shadow:0 3px 0 var(--ink)}
@@ -154,7 +155,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const pick=a=>a[rnd(a.length)];
 const fmt=s=>{s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
 const newPid=()=>Math.random().toString(36).slice(2,10);let pid=newPid();
-let S={off:{},scr:"home",n:4,dur:8,name:"",err:"",strike:{},show:false,guessing:false,vote:null};
+let S={off:{},scr:"home",n:4,dur:8,name:"",err:"",strike:{},show:false,vote:null};
 let L=null,R=null,roomApi=null,cr=null,rtk=null;
 const SK="casus_sess";
 const sessGet=()=>{try{const x=JSON.parse(localStorage.getItem(SK)||"null");return x&&x.c&&x.p&&Date.now()-x.t<432e5?x:null}catch(e){return null}};
@@ -215,10 +216,7 @@ function endView(g,local){
   const sps=g.players.filter(p=>g.sp.includes(p.id)),tally={},N=g.sp.length;
   g.players.forEach(p=>{if(p.vote)tally[p.vote]=(tally[p.vote]||0)+1});
   const rk=g.players.map(p=>[p.id,tally[p.id]||0]).sort((a,b)=>b[1]-a[1]);const caught=rk.slice(0,N).every(x=>g.sp.includes(x[0])&&x[1]>0)&&(rk.length<=N||rk[N-1][1]>rk[N][1]);
-  let msg,win;
-  if(g.guess!=null){win=g.guess===g.ln;msg=win?"Casus mekânı bildi! Casus kazandı":"Casus yanlış tahmin etti! Oyuncular kazandı";if(win)win="spy"}
-  else{msg=caught?"Casuslar yakalandı! Oyuncular kazandı":"Casuslar kaçtı! Casuslar kazandı"}
-  const spyWon=g.guess!=null?g.guess===g.ln:!caught;
+  const msg=caught?"Casuslar yakalandı! Oyuncular kazandı":"Casuslar kaçtı! Casuslar kazandı",spyWon=!caught;
   return `<div class="card"><div class="res ${spyWon?"lose":"win"}">${msg}</div><div class="note">Mekân: <b>${esc(g.ln)}</b> · Casus: <b>${sps.map(p=>esc(p.name)).join(", ")}</b>${g.blind?`<br>Sahte mekânlar: ${sps.map(p=>esc(p.name)+": "+esc((g.dc[p.id]||["?"])[0])).join(" · ")}`:""}</div></div>${VR(g,rk)}${g.host?'<button class="p" data-a="rnew">Yeni tur</button>':'<div class="note">Yeni tur için ev sahibi bekleniyor…</div>'}`;
 }
 const QS=["Burası devlete mi ait, özel mi?","Dışarısı açık mı, kapalı mı?","Burada hava durumu bir şeyi değiştirir mi?","Buraya yürüyerek mi gelinir, araçla mı?","Burada ortam genelde ıslak mı, kuru mu?","Burası genelde sessiz mi, gürültülü mü?","Burada hijyen ne kadar önemli?","Buranın zemini nasıl: halı, fayans, çim, toprak?","Burada en çok ne zaman kalabalık olur?","Burası gece de açık mı?","Girişi ücretli mi?","Buraya girmek için bilet ya da kimlik gerekir mi?","Burada telefon kullanmak serbest mi?","Burada yemek yenir mi?","Burada belirgin bir koku var mı?","Burası sıcak mı, soğuk mu?","Burada oturmak mümkün mü?","Buraya gitmek için sıra beklenir mi?","Burada vardiya sistemi var mı?","Burada üniforma giyen var mı?","Çalışanlar arasında ast-üst ilişkisi var mı?","Burada çalışmak için özel bir eğitim gerekir mi?","Burada işin en zor tarafı ne olurdu?","Burada çalışanlar genelde ayakta mı, oturarak mı çalışır?","Burada işe başlamak için sabah erken kalkmak gerekir mi?","Burada tehlikeli bir iş yapılıyor mu?","Burada bahşiş verilir mi?","Burada işin çoğu bilgisayarla mı yapılır?","Burada bir şey bozulsa ilk kim müdahale eder?","Buraya en son ne zaman geldin ya da çalıştın?","Buraya kiminle gidilir: tek başına, arkadaşla, aileyle?","Buraya girince ilk ne yaparsın?","Burada yanında ne taşırsın?","Burada bir gün geçirsen en çok ne yorar?","Burada en çok duyulan cümle ne olurdu?","Burada biri bağırırsa neden bağırmış olabilir?","Burası hangi mevsimde daha güzel?","Burada selfie çekilir mi?","Buradaki en değerli şey ne?","Burası çocuklar için uygun mu?","Burada kaç kişi çalışır sence?","Burada güvenlik kamerası var mı?","Burada hayvan olabilir mi?","Burası senin için stresli mi, keyifli mi?"];
@@ -238,10 +236,9 @@ const trDom=root=>{if(LANG==="tr")return;const w=document.createTreeWalker(root,
 const OBo={childList:true,subtree:true,characterData:true},OB=new MutationObserver(()=>{OB.disconnect();trDom($);OB.observe($,OBo)});OB.observe($,OBo);
 const LC=g=>`<button data-a="ll">Mekân listesi</button><div class="card" id="ll" hidden style="margin-top:12px"><div class="rl" style="margin:0">${gl(g).map(l=>`<span class="chip">${esc(l)}</span>`).join("")}</div></div><div style="height:16px"></div>`;
 const VT=()=>{const N=L.spies.length;
-if(L.guessing)return `<div class="card"><b>Mekânı tahmin et</b><div class="grid" style="margin-top:10px">${gl(L).map(l=>`<div data-a="lgp" data-i="${esc(l)}">${esc(l)}</div>`).join("")}</div></div><button class="g" data-a="lvb">Geri</button>`;
 return `<div class="card"><b>Casus kim?</b> <span class="tag">(${N} kişi seç)</span><div style="margin-top:10px">${Array.from({length:L.n},(_,i)=>`<div class="pl v ${L.sel.includes(i)?"sel":""}" data-a="lv" data-i="${i}"><span>${esc(nmL(L,i))}</span><span class="tag">${L.sel.includes(i)?"✓":""}</span></div>`).join("")}</div></div><button class="p" data-a="lres" ${L.sel.length!==N?"disabled":""}>Sonucu göster</button><button class="g" data-a="lback">Oyuna dön</button>`};
-const LV=g=>{const q=g.res||{},sw=q.guess!=null?!q.correct:!q.caught,vm=q.guess!=null?(q.correct?"Casus mekânı bildi! Casus kazandı":"Casus yanlış tahmin etti! Oyuncular kazandı"):(q.caught?"Casuslar yakalandı! Oyuncular kazandı":"Casuslar kaçtı! Casuslar kazandı");return `<div class="card"><div class="res ${sw?"lose":"win"}">${vm}</div>${q.sel?`<div class="note">Seçilenler: <b>${q.sel.map(x=>esc(nmL(g,x))).join(", ")}</b></div>`:""}${q.guess!=null?`<div class="note">Tahmin: <b>${esc(q.guess)}</b></div>`:""}</div>`};
-const VER="1.1.0";
+const LV=g=>{const q=g.res||{},sw=!q.caught,vm=q.caught?"Casuslar yakalandı! Oyuncular kazandı":"Casuslar kaçtı! Casuslar kazandı";return `<div class="card"><div class="res ${sw?"lose":"win"}">${vm}</div>${q.sel?`<div class="note">Seçilenler: <b>${q.sel.map(x=>esc(nmL(g,x))).join(", ")}</b></div>`:""}</div>`};
+const VER="1.1.1";
 const BASE=location.origin+location.pathname.replace(/index\.html$/,"");
 let fbApp=null;
 async function fbJoin(name){
@@ -268,14 +265,14 @@ const inv=()=>{const u=invU();let q="";try{const k=qrcode(0,"M");k.addData(u);k.
 return `<div class="card" style="text-align:center">${q?`<div class="qr" style="background:#fff;padding:12px;border-radius:16px;display:inline-block;width:200px;max-width:100%">${q}</div>`:""}<div class="note" style="margin:10px 0">QR’ı okutan otomatik odaya girer</div><div class="row"><button data-a="cp">Linki kopyala</button><button data-a="sh">Paylaş</button></div><div class="note" id="cpm">${esc(u.replace("https://",""))}</div></div>`};
 function pool(){
   const a=allL0(),on=allL().length;
-  $.innerHTML=`<h2>Oyundaki mekânlar</h2><div class="note" id="pc" style="margin:-6px 0 12px">${on} / ${a.length} seçili · en az 6</div><div class="row" style="margin-bottom:14px"><button data-a="pall" class="p">Tümü</button><button data-a="pnone">Temizle</button></div><div class="grid">${a.map(n=>`<div class="${S.off[n]?"x":"on"}" data-a="pt" data-i="${esc(n)}">${esc(n)}</div>`).join("")}</div><div style="height:16px"></div><button class="p" data-a="pback">Tamam</button>`;
+  $.innerHTML=`<button class="g bk" data-a="pback"><span>←</span> Geri</button><h2>Oyundaki mekânlar</h2><div class="note" id="pc" style="margin:-6px 0 12px">${on} / ${a.length} seçili · en az 6</div><div class="row" style="margin-bottom:14px"><button data-a="pall" class="p">Tümü</button><button data-a="pnone">Temizle</button></div><div class="grid">${a.map(n=>`<div class="${S.off[n]?"x":"on"}" data-a="pt" data-i="${esc(n)}">${esc(n)}</div>`).join("")}</div><div style="height:16px"></div><button class="p" data-a="pback">Tamam</button>`;
 }
 function locs(){
   const a=allL0(),r=allR0();
-  $.innerHTML=`<h2>Tüm mekânlar</h2><div class="note" style="margin:-6px 0 12px">${a.length} mekân · dokun, rolleri gör</div>${a.map((n,i)=>`<div class="pl v" data-a="lx" data-i="${i}"><span>${esc(n)}</span><span class="tag">${r[i].length} rol</span></div><div class="rl" id="rl${i}" hidden>${r[i].map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>`).join("")}<button class="g" data-a="home">Geri</button>`;
+  $.innerHTML=`<button class="g bk" data-a="home"><span>←</span> Geri</button><h2>Tüm mekânlar</h2><div class="note" style="margin:-6px 0 12px">${a.length} mekân · dokun, rolleri gör</div>${a.map((n,i)=>`<div class="pl v" data-a="lx" data-i="${i}"><span>${esc(n)}</span><span class="tag">${r[i].length} rol</span></div><div class="rl" id="rl${i}" hidden>${r[i].map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>`).join("")}<button class="g" data-a="home">Geri</button>`;
 }
 function cust(){
-  $.innerHTML=`<h2>Kendi mekânın</h2><div class="card"><input id="cn" placeholder="Mekân adı" maxlength="24"><input id="cr" placeholder="Roller, virgülle ayır (en az 3)"><button class="p" data-a="cadd">Ekle</button></div>${S.err?`<div class="err">${esc(S.err)}</div>`:""}${CU.length?`<div class="note" style="margin:0 0 10px">Dokun, rolleri gör</div>`:""}${CU.map((c,k)=>`<div class="pl v" data-a="cx" data-i="${k}"><span>${esc(c.n)} <span class="tag">${c.r.length} rol</span></span><button data-a="cdel" data-i="${k}" style="width:auto;padding:6px 14px">Sil</button></div><div class="rl" id="cx${k}" hidden>${c.r.map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>`).join("")}<div class="note" style="margin-bottom:6px">Oyuncu sayısından az rolü olan mekân o oyunda seçilmez.</div><div class="note">Mekânlar bu cihazda saklanır. Oda modunda ev sahibinin mekânları kullanılır.</div><button class="g" data-a="home">Geri</button>`;
+  $.innerHTML=`<button class="g bk" data-a="home"><span>←</span> Geri</button><h2>Kendi mekânın</h2><div class="card"><input id="cn" placeholder="Mekân adı" maxlength="24"><input id="cr" placeholder="Roller, virgülle ayır (en az 3)"><button class="p" data-a="cadd">Ekle</button></div>${S.err?`<div class="err">${esc(S.err)}</div>`:""}${CU.length?`<div class="note" style="margin:0 0 10px">Dokun, rolleri gör</div>`:""}${CU.map((c,k)=>`<div class="pl v" data-a="cx" data-i="${k}"><span>${esc(c.n)} <span class="tag">${c.r.length} rol</span></span><button data-a="cdel" data-i="${k}" style="width:auto;padding:6px 14px">Sil</button></div><div class="rl" id="cx${k}" hidden>${c.r.map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>`).join("")}<div class="note" style="margin-bottom:6px">Oyuncu sayısından az rolü olan mekân o oyunda seçilmez.</div><div class="note">Mekânlar bu cihazda saklanır. Oda modunda ev sahibinin mekânları kullanılır.</div><button class="g" data-a="home">Geri</button>`;
 }
 function rmenu(){
   const E=(id,t)=>`<div class="err" id="${id}">${t?esc(t):""}</div>`;
@@ -286,7 +283,7 @@ function kkAll(){const k={};if(roomApi)roomApi.peers().forEach(p=>{const x=p.pre
 function plist(all){
   if(!roomApi)return[];
   const seen={},kk=kkAll();
-  return roomApi.peers().filter(p=>p.presence&&p.presence.id&&!kk[p.presence.id]&&!seen[p.presence.id]&&(seen[p.presence.id]=1)).map(p=>({id:p.presence.id,name:String(p.presence.name||"?").slice(0,14),host:!!p.presence.host,ht:p.presence.ht||0,on:p.presence.on!==false,ls:p.presence.ls||0,vote:p.presence.vote,vr:p.presence.vr,guess:p.presence.guess,gr:p.presence.gr,jt:p.presence.jt||0})).sort((a,b)=>a.jt-b.jt||(a.id<b.id?-1:1)).slice(0,all?99:20);
+  return roomApi.peers().filter(p=>p.presence&&p.presence.id&&!kk[p.presence.id]&&!seen[p.presence.id]&&(seen[p.presence.id]=1)).map(p=>({id:p.presence.id,name:String(p.presence.name||"?").slice(0,14),host:!!p.presence.host,ht:p.presence.ht||0,on:p.presence.on!==false,ls:p.presence.ls||0,vote:p.presence.vote,vr:p.presence.vr,jt:p.presence.jt||0})).sort((a,b)=>a.jt-b.jt||(a.id<b.id?-1:1)).slice(0,all?99:20);
 }
 const hostOf=pl=>pl.filter(p=>p.host).sort((a,b)=>b.ht-a.ht||a.jt-b.jt)[0]||pl.find(p=>p.on)||pl[0];
 const rawP=id=>{const p=roomApi&&roomApi.peers().find(p=>p.presence&&p.presence.id===id);return p?p.presence:{}};
@@ -294,10 +291,9 @@ function cur(){
   const pl0=plist(),h=hostOf(pl0);if(!h)return null;
   const g0=rawP(h.id).g;if(!g0)return{ph:"lobby",players:pl0,host:h.id===pid};
   const ar=x=>Array.isArray(x)?x:x&&typeof x==="object"?Object.values(x):[],g={...g0,ord:ar(g0.ord),sp:ar(g0.sp)};if(g0.pl)g.pl=ar(g0.pl);
-  const pl=pl0.map(p=>({...p,vote:p.vr===g.r?p.vote:null,guess:p.gr===g.r?p.guess:null}));
-  const gp=pl.find(p=>p.guess!=null&&(g.sp||[]).includes(p.id));
+  const pl=pl0.map(p=>({...p,vote:p.vr===g.r?p.vote:null}));
   const vs=pl.filter(p=>(g.ord||[]).includes(p.id)),allv=vs.length>0&&vs.every(p=>p.vote);
-  return{...g,players:pl,voters:vs,allv,host:h.id===pid,guess:gp?gp.guess:null,ended:!!gp||allv};
+  return{...g,players:pl,voters:vs,allv,host:h.id===pid,ended:allv};
 }
 function hostFix(){
   if(!roomApi)return;const pl=plist(),m=pl.find(p=>p.id===pid);if(!m)return;const h=hostOf(pl);
@@ -319,7 +315,7 @@ function roomView(){
   const g=cur();
   if(!g){$.innerHTML=`<h2>Oda <span class="room">${cr}</span></h2><div class="card note">Bağlanılıyor…</div>`;return}
   if(g.ph==="play"||g.ph==="end"){
-    if(S.lastR!==g.r){S.lastR=g.r;S.show=false;S.guessing=false;S.strike={}}
+    if(S.lastR!==g.r){S.lastR=g.r;S.show=false;S.strike={}}
     const mp=g.players.find(p=>p.id===pid);S.vote=mp&&mp.vote?mp.vote:null;
     if(g.host&&g.allv&&S.endSent!==g.r){S.endSent=g.r;hostSet({ph:"end",ln:g.ln,ro:g.ro,dc:g.dc,blind:g.blind,sp:g.sp,pl:g.pl,ord:g.ord,tEnd:Date.now(),t0:g.t0,dur:g.dur,r:g.r})}
   }
@@ -334,7 +330,7 @@ async function enter(code,host,tries=0,quiet){
   if(!rm){S.err="Bu görünümde oda bağlantısı yok. Giriş yapıp tekrar dene.";return render()}
   const ss=sessGet();pid=(!host&&ss&&ss.c===code)?ss.p:newPid();
   try{roomApi=await rm.join("spy-"+code.toLowerCase())}catch(e){S.err="Odaya bağlanılamadı.";return render()}
-  cr=code;S.scr="room";S.pre=null;try{location.hash="oda-"+code.toLowerCase()}catch(e){}S.strike={};S.vote=null;S.show=false;S.guessing=false;S.endSent=null;
+  cr=code;S.scr="room";S.pre=null;try{location.hash="oda-"+code.toLowerCase()}catch(e){}S.strike={};S.vote=null;S.show=false;S.endSent=null;
   const bail=async m=>{try{await roomApi.presence({id:null,host:null,jt:null})}catch(e){}roomApi.leave();roomApi=null;sessClr();if(!quiet)S.err=m;S.scr="rmenu";try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}render()};
   if(roomApi.ready)await Promise.race([roomApi.ready,new Promise(r=>setTimeout(r,4000))]);
   await new Promise(r=>setTimeout(r,500));
@@ -388,26 +384,21 @@ document.addEventListener("click",async ev=>{
   else if(a==="cdel"){CU.splice(+i,1);try{localStorage.setItem("casus_cu",JSON.stringify(CU))}catch(e){}cust()}
   else if(a==="lshow"){L.shown=true;lcard()}
   else if(a==="lhide"){L.shown=false;L.i++;if(L.i>=L.n){L.t0=Date.now();go("lplay")}else lcard()}
-  else if(a==="lend"){L.vote=true;L.sel=[];L.guessing=false;play(true)}
+  else if(a==="lend"){L.vote=true;L.sel=[];play(true)}
   else if(a==="lv"){const x=+i,N=L.spies.length;if(L.sel.includes(x))L.sel=L.sel.filter(y=>y!==x);else if(N===1)L.sel=[x];else if(L.sel.length<N)L.sel.push(x);play(true)}
   else if(a==="lres"){const a2=L.sel.slice().sort((p,q)=>p-q).join(),b2=L.spies.slice().sort((p,q)=>p-q).join();L.res={caught:a2===b2,sel:L.sel.slice()};L.ended=true;L.tEnd=Date.now();play(true)}
-  else if(a==="lgs"){L.guessing=true;play(true)}
-  else if(a==="lgp"){L.res={guess:i,correct:i===L.ln};L.ended=true;L.tEnd=Date.now();play(true)}
-  else if(a==="lvb"){L.guessing=false;play(true)}
-  else if(a==="lback"){L.vote=false;L.guessing=false;play(true)}
+  else if(a==="lback"){L.vote=false;play(true)}
   else if(a==="st"){S.strike[i]=!S.strike[i];t.classList.toggle("x")}
   else if(a==="rmake"||a==="rjoin"){
     S.name=(document.getElementById("nm").value||"").trim();if(!S.name){const er=document.getElementById("er"),nm=document.getElementById("nm");if(er)er.textContent="Önce adını yaz.";if(nm){nm.classList.remove("bad");void nm.offsetWidth;nm.classList.add("bad");nm.focus()}return}try{localStorage.setItem("casus_nm",S.name)}catch(e){}
     if(a==="rmake"){const c=Array.from({length:4},()=>"ABCDEFGHJKLMNPQRSTUVWXYZ"[Math.floor(Math.random()*24)]).join("");await enter(c,true)}
     else{const cdE=document.getElementById("cd"),c=((cdE?cdE.value:S.pre)||"").trim().toUpperCase();if(c.length!==4){S.err="4 harfli kodu gir.";return rmenu()}await enter(c,false)}
   }
-  else if(a==="rstart"){const g=cur();if(!g||!g.host)return;const pl=g.players,AL=allL(),AR=allR(),sp=Math.min(S.sp||1,maxSp(pl.length)),el=AL.filter((n,i)=>AR[i].length>=pl.length-sp),ln=bagLoc(AL,el.length?el:AL),lc=AL.indexOf(ln),spl=shuf(pl.map(p=>p.id)).slice(0,sp),dc={},ro={},rs=rolesFor(ln,AR[lc],pl.length-sp);let q=0;decs(AL,AR,ln,sp).forEach((d,k)=>{dc[spl[k]]=[d[0]];if(S.blind){const ok=d[1].filter(x=>!AR[lc].includes(x));ro[spl[k]]=pick(ok.length?ok:d[1])}});shuf(pl.map(p=>p.id).filter(x=>!spl.includes(x))).forEach(x=>{ro[x]=rs[q++]});S.vote=null;S.show=false;S.guessing=false;S.strike={};S.endSent=null;const r0=Date.now();await hostSet({ph:"play",ln,ro,dc:S.blind?dc:{},blind:!!S.blind,sp:spl,...(CU.length||Object.values(S.off).some(Boolean)?{pl:AL}:{}),ord:pl.map(p=>p.id),t0:r0,dur:S.dur*60,r:r0})}
+  else if(a==="rstart"){const g=cur();if(!g||!g.host)return;const pl=g.players,AL=allL(),AR=allR(),sp=Math.min(S.sp||1,maxSp(pl.length)),el=AL.filter((n,i)=>AR[i].length>=pl.length-sp),ln=bagLoc(AL,el.length?el:AL),lc=AL.indexOf(ln),spl=shuf(pl.map(p=>p.id)).slice(0,sp),dc={},ro={},rs=rolesFor(ln,AR[lc],pl.length-sp);let q=0;decs(AL,AR,ln,sp).forEach((d,k)=>{dc[spl[k]]=[d[0]];if(S.blind){const ok=d[1].filter(x=>!AR[lc].includes(x));ro[spl[k]]=pick(ok.length?ok:d[1])}});shuf(pl.map(p=>p.id).filter(x=>!spl.includes(x))).forEach(x=>{ro[x]=rs[q++]});S.vote=null;S.show=false;S.strike={};S.endSent=null;const r0=Date.now();await hostSet({ph:"play",ln,ro,dc:S.blind?dc:{},blind:!!S.blind,sp:spl,...(CU.length||Object.values(S.off).some(Boolean)?{pl:AL}:{}),ord:pl.map(p=>p.id),t0:r0,dur:S.dur*60,r:r0})}
   else if(a==="rnew"){await hostSet({ph:"lobby",r:Date.now()})}
   else if(a==="kick"){const g=cur();if(!g||!g.host||i===pid)return;const kk={...(rawP(pid).kk||{}),[i]:Date.now()};await roomApi.presence({kk});if(roomApi.drop)roomApi.drop(i);roomView()}
   else if(a==="rtog"){S.show=!S.show;roomView()}
   else if(a==="vt"){const g=cur();if(!g||S.vote||!(g.ord||[]).includes(pid)||!g.players.some(p=>p.id===i))return;S.vote=i;await roomApi.presence({vote:i,vr:g.r});roomView()}
-  else if(a==="gstart"){S.guessing=true;roomView()}
-  else if(a==="gs"){const g=cur();if(g&&isS(g))await roomApi.presence({guess:i,gr:g.r})}
   else if(a==="rleave"){clearInterval(rtk);sessClr();await roomApi.presence({id:null,host:null});roomApi.leave();roomApi=null;go("home")}
 });
 try{S.name=localStorage.getItem("casus_nm")||""}catch(e){}
