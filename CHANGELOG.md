@@ -3,6 +3,9 @@
 Sürüm numarası ana ekranın en altında görünür. Her güncellemede artırılır:
 düzeltmelerde son sayı (1.0.1), yeni özelliklerde ortadaki sayı (1.1.0).
 
+## 1.1.2
+- Sonuç ekranı yeniden yazıldı: büyük başlık kazananı söyler ("Oyuncular kazandı!" / "Casus kazandı!"), altındaki satır nedenini açıklar. Tek ve çok casus için ayrı metinler, 5 dilde.
+
 ## 1.1.1
 - Casusun mekânı tahmin ederek oyunu bitirme kuralı tamamen kaldırıldı (kod dahil). Oyun yalnızca herkesin oy vermesiyle biter.
 - Mekânlar, Mekân ekle ve Mekân seç ekranlarının üstüne "Geri" düğmesi eklendi; artık en alta inmek gerekmiyor.
